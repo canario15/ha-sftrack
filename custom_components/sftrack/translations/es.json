@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectar con SafeTrack 🚜",
+        "description": "Ingrese la API Key proporcionada por SafeTrack.",
+        "data": {
+          "api_key": "API Key"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "La API Key no es válida.",
+      "cannot_connect": "No fue posible conectarse con SafeTrack."
+    },
+    "abort": {
+      "already_configured": "La integración ya está configurada."
+    }
+  }
+}
