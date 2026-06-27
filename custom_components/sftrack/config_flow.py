@@ -27,16 +27,19 @@ class SafeTrackConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             client = SafeTrackApi(api_key, session)
 
             try:
-                await client.get_devices()
+                devices = await client.get_devices()
             except SafeTrackAuthError:
                 errors["base"] = "invalid_auth"
             except SafeTrackApiError:
                 errors["base"] = "cannot_connect"
             else:
-                return self.async_create_entry(
-                    title="SafeTrack GPS",
-                    data={CONF_API_KEY: api_key},
-                )
+                if not devices:
+                    errors["base"] = "no_devices"
+                else:
+                    return self.async_create_entry(
+                        title="SafeTrack",
+                        data={CONF_API_KEY: api_key},
+                    )
 
         data_schema = vol.Schema(
             {

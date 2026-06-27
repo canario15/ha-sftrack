@@ -11,7 +11,8 @@
     },
     "error": {
       "invalid_auth": "Invalid API Key.",
-      "cannot_connect": "Could not connect to SafeTrack."
+      "cannot_connect": "Could not connect to SafeTrack.",
+      "no_devices": "The API Key is valid, but no associated devices were found."
     },
     "abort": {
       "already_configured": "Integration already configured."
