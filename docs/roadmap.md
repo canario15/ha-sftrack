@@ -17,9 +17,9 @@
 
 ## Milestone 2 - Device Discovery 🚧
 
-- [ ] Register devices in Home Assistant
-- [ ] Device Registry
-- [ ] Device information
+- [x] Register devices in Home Assistant
+- [x] Device Registry
+- [x] Device information
 
 ---
 
