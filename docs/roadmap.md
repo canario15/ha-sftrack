@@ -11,6 +11,7 @@
 - [x] Device model
 - [x] Parsers
 - [x] Translations
+- [x] Documentation
 
 ---
 
@@ -24,7 +25,7 @@
 
 ## Milestone 3 - Live Tracking
 
-- [ ] DataUpdateCoordinator
+- [x] DataUpdateCoordinator
 - [ ] Device Tracker entity
 - [ ] GPS position
 - [ ] Speed

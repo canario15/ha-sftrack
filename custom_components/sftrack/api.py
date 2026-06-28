@@ -5,8 +5,8 @@ from __future__ import annotations
 import aiohttp
 
 from .const import BASE_URL
-from .models import Device
-from .parsers import parse_device
+from .models import Device, Track
+from .parsers import parse_device, parse_track
 
 
 class SafeTrackApiError(Exception):
@@ -41,5 +41,27 @@ class SafeTrackApi:
 
         if isinstance(data, dict) and data.get("code") == 0:
             return [parse_device(item) for item in data.get("record", [])]
+
+        raise SafeTrackApiError("Unexpected response from SafeTrack API")
+    
+    async def get_tracks(self, imeis: list[str]) -> list[Track]:
+        """Return live tracking data for the given IMEIs."""
+        url = f"{BASE_URL}/api/v1/track"
+
+        async with self._session.get(
+            url,
+            params={
+                "api_key": self._api_key,
+                "imeis": ",".join(imeis),
+            },
+        ) as response:
+            if response.status == 401:
+                raise SafeTrackAuthError("Invalid API key")
+
+            response.raise_for_status()
+            data = await response.json()
+
+        if isinstance(data, dict) and data.get("code") == 0:
+            return [parse_track(item) for item in data.get("record", [])]
 
         raise SafeTrackApiError("Unexpected response from SafeTrack API")
