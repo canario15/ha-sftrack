@@ -26,8 +26,8 @@
 ## Milestone 3 - Live Tracking
 
 - [x] DataUpdateCoordinator
-- [ ] Device Tracker entity
-- [ ] GPS position
+- [x] Device Tracker entity
+- [x] GPS position
 - [ ] Speed
 - [ ] Course
 
