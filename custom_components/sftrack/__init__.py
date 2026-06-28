@@ -5,6 +5,7 @@ from __future__ import annotations
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers import device_registry as dr
 
 from .api import SafeTrackApi
 from .const import CONF_API_KEY, DOMAIN
@@ -21,6 +22,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     devices = await api.get_devices()
     imeis = [device.imei for device in devices]
+
+    device_registry = dr.async_get(hass)
+
+    for device in devices:
+        
+        device_registry.async_get_or_create(
+            config_entry_id=entry.entry_id,
+            identifiers={(DOMAIN, device.imei)},
+            manufacturer="SafeTrack",
+            name=device.name,
+            model=device.device_type,
+        )
 
     coordinator = SafeTrackDataUpdateCoordinator(hass, entry, imeis)
 

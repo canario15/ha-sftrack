@@ -26,7 +26,7 @@ class SafeTrackApi:
         self._session = session
 
     async def get_devices(self) -> list[Device]:
-        """Return devices linked to the API key."""
+        """Return devices linked to the API key with detailed information."""
         url = f"{BASE_URL}/api/v1/device/list"
 
         async with self._session.get(url, params={"api_key": self._api_key}) as response:
@@ -37,10 +37,12 @@ class SafeTrackApi:
             data = await response.json()
 
         if isinstance(data, list):
-            return [parse_device(item) for item in data]
+            imeis = [item["imei"] for item in data]
+            return await self._get_device_details(imeis)
 
         if isinstance(data, dict) and data.get("code") == 0:
-            return [parse_device(item) for item in data.get("record", [])]
+            imeis = [item["imei"] for item in data.get("record", [])]
+            return await self._get_device_details(imeis)
 
         raise SafeTrackApiError("Unexpected response from SafeTrack API")
     
@@ -63,5 +65,30 @@ class SafeTrackApi:
 
         if isinstance(data, dict) and data.get("code") == 0:
             return [parse_track(item) for item in data.get("record", [])]
+
+        raise SafeTrackApiError("Unexpected response from SafeTrack API")
+
+    async def _get_device_details(self, imeis: list[str]) -> list[Device]:
+        """Return detailed device information for the given IMEIs."""
+        if not imeis:
+            return []
+
+        url = f"{BASE_URL}/api/v1/device/detail"
+
+        async with self._session.get(
+            url,
+            params={
+                "api_key": self._api_key,
+                "imeis": ",".join(imeis),
+            },
+        ) as response:
+            if response.status == 401:
+                raise SafeTrackAuthError("Invalid API key")
+
+            response.raise_for_status()
+            data = await response.json()
+
+        if isinstance(data, dict) and data.get("code") == 0:
+            return [parse_device(item) for item in data.get("record", [])]
 
         raise SafeTrackApiError("Unexpected response from SafeTrack API")
