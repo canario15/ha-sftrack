@@ -34,6 +34,7 @@ class Track:
     battery: int | None = None
     acc_status: int | None = None
     charge_status: int | None = None
+    external_power: bool | None = None
     oil_power_status: int | None = None
     data_status: int | None = None
     door_status: int | None = None

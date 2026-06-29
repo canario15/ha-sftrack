@@ -28,20 +28,20 @@
 - [x] DataUpdateCoordinator
 - [x] Device Tracker entity
 - [x] GPS position
-- [ ] Speed
-- [ ] Course
+- [x] Speed
+- [x] Course
 
 ---
 
 ## Milestone 4 - Sensors
 
-- [ ] Battery
-- [ ] Odometer
-- [ ] Today's mileage
-- [ ] ACC status
-- [ ] External power
-- [ ] Fuel
-- [ ] Temperature
+- [x] Battery
+- [x] Odometer
+- [x] Today's mileage
+- [x] ACC status
+- [x] External power
+- [x] Fuel
+- [x] Temperature
 
 ---
 

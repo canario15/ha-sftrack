@@ -13,8 +13,11 @@ from .const import CONF_API_KEY, DOMAIN
 from .coordinator import SafeTrackDataUpdateCoordinator
 
 
-PLATFORMS = [Platform.DEVICE_TRACKER]
-
+PLATFORMS = [
+    Platform.DEVICE_TRACKER,
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up SafeTrack from a config entry."""
