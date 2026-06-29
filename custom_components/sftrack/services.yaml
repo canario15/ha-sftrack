@@ -1,0 +1,22 @@
+get_playback:
+  name: Get playback
+  description: Get historical GPS playback points for a SafeTrack device.
+  fields:
+    imei:
+      name: IMEI
+      description: Device IMEI.
+      required: true
+      selector:
+        text:
+    start:
+      name: Start
+      description: Start datetime.
+      required: true
+      selector:
+        datetime:
+    end:
+      name: End
+      description: End datetime.
+      required: true
+      selector:
+        datetime:

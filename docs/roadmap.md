@@ -47,10 +47,10 @@
 
 ## Milestone 5 - History
 
-- [ ] Playback service
+- [x] Playback service
 - [ ] Playback map card
 - [ ] Alarm history
-- [ ] Home Assistant services
+- [x] Home Assistant services
 - [ ] Event entities
 - [ ] Geo-fence events
 

@@ -46,3 +46,13 @@ class Track:
     server_time: datetime | None = None
     system_time: datetime | None = None
     heart_time: datetime | None = None
+
+@dataclass
+class PlaybackPoint:
+    """Playback point."""
+
+    latitude: float
+    longitude: float
+    timestamp: datetime
+    speed: int
+    course: int

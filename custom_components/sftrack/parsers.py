@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .models import Device, Track
+from .models import Device, PlaybackPoint, Track
 from .utils import empty_to_none, unix_to_datetime
 
 
@@ -46,3 +46,28 @@ def parse_track(data: dict) -> Track:
         system_time=unix_to_datetime(data.get("systemtime")),
         heart_time=unix_to_datetime(data.get("hearttime")),
     )
+
+def parse_playback(record: str) -> list[PlaybackPoint]:
+    """Parse SafeTrack playback response into playback points."""
+    if not record:
+        return []
+
+    points = []
+
+    for raw_point in record.split(";"):
+        if not raw_point:
+            continue
+
+        longitude, latitude, timestamp, speed, course = raw_point.split(",")
+
+        points.append(
+            PlaybackPoint(
+                longitude=float(longitude),
+                latitude=float(latitude),
+                timestamp=unix_to_datetime(int(timestamp)),
+                speed=int(speed),
+                course=int(course),
+            )
+        )
+
+    return points

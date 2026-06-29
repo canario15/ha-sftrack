@@ -11,6 +11,7 @@ from homeassistant.const import Platform
 from .api import SafeTrackApi
 from .const import CONF_API_KEY, DOMAIN
 from .coordinator import SafeTrackDataUpdateCoordinator
+from .services import async_setup_services
 
 
 PLATFORMS = [
@@ -50,7 +51,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "coordinator": coordinator,
     }
 
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    await async_setup_services(hass)
+
+    await hass.config_entries.asyncforward_entry_setups(entry, PLATFORMS)
 
     return True
 
