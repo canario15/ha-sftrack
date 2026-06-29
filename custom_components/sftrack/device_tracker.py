@@ -7,6 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.device_registry import DeviceInfo
 
 from .const import DOMAIN
 from .coordinator import SafeTrackDataUpdateCoordinator
@@ -45,6 +46,13 @@ class SafeTrackDeviceTracker(
         self._imei = imei
         self._attr_unique_id = f"{imei}_tracker"
         self._attr_name = name
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Return device information."""
+        return DeviceInfo(
+            identifiers={(DOMAIN, self._imei)},
+        )
 
     @property
     def latitude(self) -> float | None:
