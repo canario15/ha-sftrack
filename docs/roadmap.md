@@ -49,7 +49,7 @@
 
 - [x] Playback service
 - [ ] Playback map card
-- [ ] Alarm history
+- [x] Alarm history
 - [x] Home Assistant services
 - [ ] Event entities
 - [ ] Geo-fence events

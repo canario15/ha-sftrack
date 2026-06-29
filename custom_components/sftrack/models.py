@@ -56,3 +56,17 @@ class PlaybackPoint:
     timestamp: datetime
     speed: int
     course: int
+
+@dataclass
+class Alarm:
+    """SafeTrack alarm event."""
+
+    alarm_type: int
+    alarm_name: str
+    longitude: float
+    latitude: float
+    gps_time: datetime
+    system_time: datetime
+    speed: int
+    course: int
+    geofence_id: int

@@ -6,8 +6,8 @@ from datetime import datetime
 import aiohttp
 
 from .const import BASE_URL
-from .models import Device, PlaybackPoint, Track
-from .parsers import parse_device, parse_playback, parse_track
+from .models import Alarm, Device, PlaybackPoint, Track
+from .parsers import parse_alarms, parse_device, parse_playback, parse_track
 
 
 class SafeTrackApiError(Exception):
@@ -120,5 +120,34 @@ class SafeTrackApi:
 
         if isinstance(data, dict) and data.get("code") == 0:
             return parse_playback(data.get("record", ""))
+
+        raise SafeTrackApiError("Unexpected response from SafeTrack API")
+    
+    async def get_alarms(
+        self,
+        imei: str,
+        start: datetime,
+        end: datetime,
+    ) -> list[Alarm]:
+        """Return alarm events for a device."""
+        url = f"{BASE_URL}/api/v1/alarm/list"
+
+        async with self._session.get(
+            url,
+            params={
+                "api_key": self._api_key,
+                "imei": imei,
+                "begintime": int(start.timestamp()),
+                "endtime": int(end.timestamp()),
+            },
+        ) as response:
+            if response.status == 401:
+                raise SafeTrackAuthError("Invalid API key")
+
+            response.raise_for_status()
+            data = await response.json()
+
+        if isinstance(data, dict) and data.get("code") == 0:
+            return parse_alarms(data.get("record", ""))
 
         raise SafeTrackApiError("Unexpected response from SafeTrack API")

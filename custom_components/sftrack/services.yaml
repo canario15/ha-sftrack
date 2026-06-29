@@ -20,3 +20,26 @@ get_playback:
       required: true
       selector:
         datetime:
+
+get_alarms:
+  name: Get alarms
+  description: Get historical alarm events for a SafeTrack device.
+  fields:
+    imei:
+      name: IMEI
+      description: Device IMEI.
+      required: true
+      selector:
+        text:
+    start:
+      name: Start
+      description: Start datetime.
+      required: true
+      selector:
+        datetime:
+    end:
+      name: End
+      description: End datetime.
+      required: true
+      selector:
+        datetime:

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from .models import Device, PlaybackPoint, Track
+from .models import Alarm, Device, PlaybackPoint, Track
 from .utils import empty_to_none, unix_to_datetime
+from .const import ALARM_TYPE_NAMES
 
 
 def parse_device(data: dict) -> Device:
@@ -71,3 +72,41 @@ def parse_playback(record: str) -> list[PlaybackPoint]:
         )
 
     return points
+
+def parse_alarms(record: str) -> list[Alarm]:
+    """Parse SafeTrack alarm response into alarm events."""
+    if not record:
+        return []
+
+    alarms = []
+
+    for raw_alarm in record.split(";"):
+        if not raw_alarm:
+            continue
+
+        (
+            alarm_type,
+            longitude,
+            latitude,
+            gps_time,
+            system_time,
+            speed,
+            course,
+            geofence_id,
+        ) = raw_alarm.split(",")
+
+        alarms.append(
+            Alarm(
+                alarm_type=int(alarm_type),
+                alarm_name=ALARM_TYPE_NAMES.get(int(alarm_type), f"Unknown ({int(alarm_type)})"),
+                longitude=float(longitude),
+                latitude=float(latitude),
+                gps_time=unix_to_datetime(int(gps_time)),
+                system_time=unix_to_datetime(int(system_time)),
+                speed=int(speed),
+                course=int(course),
+                geofence_id=int(geofence_id),
+            )
+        )
+
+    return alarms
