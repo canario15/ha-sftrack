@@ -63,3 +63,15 @@
 - [ ] HACS support
 - [ ] Documentation
 - [ ] First stable release
+
+---
+
+## Milestone 7 - Dashboard / Panel
+
+- [ ] Lovelace dashboard example
+- [ ] Fleet overview card
+- [ ] Map with all devices
+- [ ] Device list
+- [ ] Playback route viewer
+- [ ] Alarm/event timeline
+- [ ] Optional custom panel
