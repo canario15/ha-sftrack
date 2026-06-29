@@ -19,3 +19,10 @@ def empty_to_none(value: str | None) -> str | None:
         return None
 
     return value
+
+def meters_to_kilometers(value: int | float | None) -> float | None:
+    """Convert meters to kilometers."""
+    if value is None:
+        return None
+
+    return round(value / 1000, 2)

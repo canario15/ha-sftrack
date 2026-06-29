@@ -5,6 +5,7 @@ from __future__ import annotations
 from .models import Alarm, Device, PlaybackPoint, Track
 from .utils import empty_to_none, unix_to_datetime
 from .const import ALARM_TYPE_NAMES
+from .utils import meters_to_kilometers
 
 
 def parse_device(data: dict) -> Device:
@@ -39,9 +40,9 @@ def parse_track(data: dict) -> Track:
         data_status=data.get("datastatus"),
         door_status=data.get("doorstatus"),
         defense_status=data.get("defencestatus"),
-        mileage=data.get("mileage"),
-        today_mileage=data.get("todaymileage"),
-        odometer=data.get("odometer"),
+        mileage=meters_to_kilometers(data.get("mileage")),
+        today_mileage=meters_to_kilometers(data.get("todaymileage")),
+        odometer=meters_to_kilometers(data.get("odometer")),
         gps_time=unix_to_datetime(data.get("gpstime")),
         server_time=unix_to_datetime(data.get("servertime")),
         system_time=unix_to_datetime(data.get("systemtime")),
