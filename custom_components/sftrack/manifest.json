@@ -1,14 +1,15 @@
 {
   "domain": "sftrack",
   "name": "SafeTrack",
-  "version": "0.1.0",
-  "codeowners": ["@canario15"],
+  "codeowners": [
+    "@canario15"
+  ],
   "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/canario15/ha-sftrack",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
-  "documentation": "https://github.com/canario15/ha-sftrack",
   "issue_tracker": "https://github.com/canario15/ha-sftrack/issues",
-  "dependencies": [],
   "requirements": [],
-  "loggers": ["custom_components.sftrack"]
+  "version": "0.1.0"
 }
